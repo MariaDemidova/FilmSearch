@@ -5,29 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmsearch.R
-import com.example.filmsearch.ui.main.model.Repository
-import com.example.filmsearch.ui.main.model.RepositoryImpl
 import com.example.filmsearch.ui.main.model.Film
 import kotlinx.android.synthetic.main.item_film.view.*
 
 class FilmAdapter : RecyclerView.Adapter<FilmAdapter.ViewHolder>() {
 
-    val repository: Repository = RepositoryImpl()
+    var filmData: List<Film> = listOf()
 
-    var filmList: List<Film> = ArrayList()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(film: Film) {
-            itemView.title.text = film.name
-            itemView.ganre.text = film.ganre
-            itemView.date.text = film.date.toString()
-            itemView.imageView.setImageResource(film.imageIndex)
-        }
+    fun setFilm(data: List<Film>) {
+        filmData = data
+        notifyDataSetChanged()
     }
+
+    var listener: OnItemViewOnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
@@ -35,14 +25,31 @@ class FilmAdapter : RecyclerView.Adapter<FilmAdapter.ViewHolder>() {
         )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(filmList[position])
+        holder.bind(filmData[position])
     }
 
-    override fun getItemCount(): Int = repository.getFilmFromLocalStorage().size
+    override fun getItemCount(): Int = filmData.size
 
-    internal fun setFilmList (filmList : List<Film>){
-        this.filmList = filmList
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(film: Film) {
+
+            itemView.title.text = film.name
+            itemView.ganre.text = film.ganre
+            itemView.date.text = film.date.toString()
+            itemView.imageView.setImageResource(film.imageIndex)
+            itemView.setOnClickListener { 
+                listener?.onItemClick(film)
+            }
+        }
+    }
+
+    internal fun setFilmList(filmList: List<Film>) {
+        this.filmData = filmList
         notifyDataSetChanged()
+    }
+
+    fun interface OnItemViewOnClickListener{
+        fun onItemClick (film: Film)
     }
 
 }

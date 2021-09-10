@@ -6,25 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/main_view"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mainFragmentRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_lines"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_film"
-            android:layout_margin="8dp"/>
-    </LinearLayout>
+        tools:listitem="@layout/item_film"
+        android:layout_margin="8dp"/>
 
     <FrameLayout
         android:id="@+id/loading_layout"
@@ -41,5 +28,23 @@
             android:layout_gravity="center" />
 
     </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/main_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/button_lang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/rus2"
+            android:layout_marginEnd="4dp" />
+
+    </LinearLayout>
+
+
+
 
 </FrameLayout>
