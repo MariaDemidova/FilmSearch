@@ -5,4 +5,5 @@
     <dimen name="textDescription">20sp</dimen>
     <dimen name="textGanre">25sp</dimen>
     <dimen name="marginForElements">4dp</dimen>
+    <dimen name="detailNameSize">35sp</dimen>
 </resources>

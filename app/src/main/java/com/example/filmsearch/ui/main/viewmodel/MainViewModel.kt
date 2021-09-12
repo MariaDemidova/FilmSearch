@@ -7,21 +7,35 @@ import com.example.filmsearch.ui.main.model.Repository
 import com.example.filmsearch.ui.main.model.RepositoryImpl
 import java.lang.Thread.sleep
 
-class MainViewModel(private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()) :
+class MainViewModel(
+    private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
+private val repositoryImpl: Repository = RepositoryImpl()) :
     ViewModel() {
 
-    private val repository: Repository = RepositoryImpl()
-     val liveData: LiveData<AppState> = liveDataToObserve
+    fun getLiveData() = liveDataToObserve
 
-    fun getFilmFromLocalSource() = getDataFromLocalSource()
-    fun getFilmFromRemoteSource() = getDataFromLocalSource()
+//    private val repository: Repository = RepositoryImpl()
+//    val liveData: LiveData<AppState> = liveDataToObserve
 
-    private fun getDataFromLocalSource() {
+    fun getFilmFromLocalSourceRus() = getDataFromLocalSource(isRussian=true)
+    fun getFilmFromLocalSourceWorld() = getDataFromLocalSource(isRussian = false)
+    fun getFilmFromRemoteSource() = getDataFromLocalSource(isRussian = true)
+
+    private fun getDataFromLocalSource(isRussian: Boolean = true) {
         liveDataToObserve.value = AppState.Loading
 
         Thread {
             sleep(2000)
-            liveDataToObserve.postValue(AppState.Success(repository.getFilmFromLocalStorage()))
+
+            liveDataToObserve.postValue(
+                AppState.Success(
+                    if (isRussian) {
+                        repositoryImpl.getFilmFromLocalStorageRus()
+                    } else {
+                        repositoryImpl.getFilmFromLocalStorageWorld()
+                    }
+                )
+            )
 
         }.start()
     }
