@@ -28,7 +28,9 @@ class MainFragment : Fragment() {
         FilmAdapter()
     }
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
+    }
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
 
@@ -48,16 +50,13 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
         filmAdapter.listener =
             FilmAdapter.OnItemViewOnClickListener { film ->
-                val manager = activity?.supportFragmentManager
-                if(manager != null){
-                    val bundle = Bundle()
-                    bundle.putParcelable(DetailFragment.FILM_EXTRA, film)
-                    manager.beginTransaction()
-                        .replace(R.id.container, DetailFragment.newInstance(bundle))
+                activity?.supportFragmentManager?.let {
+                    it.beginTransaction()
+                        .replace(R.id.container, DetailFragment.newInstance(Bundle().apply {
+                            putParcelable(DetailFragment.FILM_EXTRA, film)
+                        }))
                         .addToBackStack("")
                         .commit()
                 }
@@ -91,10 +90,10 @@ class MainFragment : Fragment() {
     private fun renderData(state: AppState) {
         //  val repository: Repository = RepositoryImpl()
         when (state) {
-            is AppState.Loading -> binding.loadingLayout.visibility = View.VISIBLE
+            is AppState.Loading -> binding.loadingLayout.show()
 
             is AppState.Success -> {
-                binding.loadingLayout.visibility = View.GONE
+                binding.loadingLayout.hide()
 
                 filmAdapter.setFilmList(state.filmsList)
                 filmAdapter.let {
@@ -102,21 +101,16 @@ class MainFragment : Fragment() {
                     mainFragmentRecyclerView.layoutManager =
                         layoutManager
                     mainFragmentRecyclerView.adapter = it
-                    mainFragmentRecyclerView.addItemDecoration(
-                        DividerItemDecoration(
-                            view?.context,
-                            DividerItemDecoration.VERTICAL
-                        )
-                    )
                     it.notifyDataSetChanged()
                 }
             }
             is AppState.Error -> {
-                binding.loadingLayout.visibility = View.GONE
-                Snackbar
-                    .make(binding.mainView, "ERROR", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Reload") { viewModel.getFilmFromLocalSourceRus() }
-                    .show()
+                binding.loadingLayout.hide()
+                binding.buttonLang.showSnackBar(
+                    getString(R.string.textSnack),
+                    getString(R.string.actionTextSnack),
+                    { viewModel.getFilmFromLocalSourceRus() },
+                )
             }
         }
     }

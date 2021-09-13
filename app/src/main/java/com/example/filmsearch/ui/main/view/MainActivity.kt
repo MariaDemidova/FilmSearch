@@ -8,13 +8,13 @@ import com.example.filmsearch.databinding.MainActivityBinding
 class MainActivity : AppCompatActivity() {
 
 
-
-private lateinit var binding: MainActivityBinding
+    private val binding: MainActivityBinding by lazy {
+        MainActivityBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
