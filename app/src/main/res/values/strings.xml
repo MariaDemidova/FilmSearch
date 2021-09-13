@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FilmSearch</string>
+    <string name="textSnack">ERROR</string>
+    <string name="actionTextSnack">Reload</string>
 </resources>

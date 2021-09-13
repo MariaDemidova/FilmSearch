@@ -32,13 +32,15 @@ class FilmAdapter : RecyclerView.Adapter<FilmAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(film: Film) {
+            itemView.apply {
+                title.text = film.name
+                ganre.text = film.ganre
+                date.text = film.date.toString()
+                imageView.setImageResource(film.imageIndex)
+                setOnClickListener {
+                    listener?.onItemClick(film)
+                }
 
-            itemView.title.text = film.name
-            itemView.ganre.text = film.ganre
-            itemView.date.text = film.date.toString()
-            itemView.imageView.setImageResource(film.imageIndex)
-            itemView.setOnClickListener { 
-                listener?.onItemClick(film)
             }
         }
     }
@@ -48,8 +50,8 @@ class FilmAdapter : RecyclerView.Adapter<FilmAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    fun interface OnItemViewOnClickListener{
-        fun onItemClick (film: Film)
+    fun interface OnItemViewOnClickListener {
+        fun onItemClick(film: Film)
     }
 
 }
