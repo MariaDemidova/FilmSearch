@@ -27,10 +27,6 @@ fun getRussianFilm(): List<Film> = listOf(
     Film("Все умрут, а я останусь", "drama", 2008, R.drawable.vseumrut, id = 31418),
     Film("Похороните меня за плинтусом", "drama", 2009, R.drawable.pohoronite, id = 19875)
 
-//    Film(imageIndex = R.drawable.pi2hi),
-//    Film("Старая кошатница", "musical", 1950, R.drawable.kosh, 834404),
-//    Film("Крокодилл против саранчи", "horror", 2021, R.drawable.croc),
-//    Film("Доброе утро в тюрьме", "documentary", 1991, R.drawable.utro),
 )
 
 fun getWorldFilm(): List<Film> = listOf(

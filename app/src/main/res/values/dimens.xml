@@ -6,4 +6,8 @@
     <dimen name="textGanre">20sp</dimen>
     <dimen name="marginForElements">4dp</dimen>
     <dimen name="detailNameSize">35sp</dimen>
+    <dimen name="margin_15_dp">15dp</dimen>
+    <dimen name="genreTextSize">30sp</dimen>
+    <dimen name="main_container_text_size">10sp</dimen>
+    <dimen name="margin_5_dp">5dp</dimen>
 </resources>

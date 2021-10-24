@@ -3,8 +3,11 @@ package com.example.filmsearch.ui.main.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.filmsearch.ui.main.model.Repository
 import com.example.filmsearch.ui.main.model.RepositoryImpl
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.lang.Thread.sleep
 
 class MainViewModel(
@@ -24,8 +27,21 @@ class MainViewModel(
     private fun getDataFromLocalSource(isRussian: Boolean = true) {
         liveDataToObserve.value = AppState.Loading
 
+//        viewModelScope.launch (Dispatchers.IO) {
+//            sleep(500)
+//            liveDataToObserve.postValue(
+//                AppState.Success(
+//                    if (isRussian) {
+//                        repositoryImpl.getFilmFromLocalStorageRus()
+//                    } else {
+//                        repositoryImpl.getFilmFromLocalStorageWorld()
+//                    }
+//                )
+//            )
+//        }
+
         Thread {
-            sleep(2000)
+            sleep(500)
 
             liveDataToObserve.postValue(
                 AppState.Success(
