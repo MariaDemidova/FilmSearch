@@ -72,7 +72,6 @@ class MainFragment : Fragment() {
                 renderData(state)
             })
         viewModel.getFilmFromLocalSourceRus()
-
     }
 
     private fun changeFilmDataSet() {
@@ -86,9 +85,8 @@ class MainFragment : Fragment() {
         isDataSetRus = !isDataSetRus
     }
 
-
     private fun renderData(state: AppState) {
-        //  val repository: Repository = RepositoryImpl()
+
         when (state) {
             is AppState.Loading -> binding.loadingLayout.show()
 
