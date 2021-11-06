@@ -1,5 +1,4 @@
 package com.example.filmsearch.ui.main.view
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.filmsearch.R
 import com.example.filmsearch.databinding.MainFragmentBinding
-import com.example.filmsearch.ui.main.model.Film
+
 import com.example.filmsearch.ui.main.model.Repository
 import com.example.filmsearch.ui.main.model.RepositoryImpl
 import com.example.filmsearch.ui.main.viewmodel.MainViewModel
@@ -71,27 +70,27 @@ class MainFragment : Fragment() {
             { state ->
                 renderData(state)
             })
-        viewModel.getFilmFromLocalSourceRus()
+        viewModel.getPopularFilms()
     }
 
     private fun changeFilmDataSet() {
-        if (isDataSetRus) {
-            viewModel.getFilmFromLocalSourceWorld()
-            binding.buttonLang.setImageResource(R.drawable.world2)
-        } else {
-            viewModel.getFilmFromLocalSourceRus()
-            binding.buttonLang.setImageResource(R.drawable.rus2)
-        }
-        isDataSetRus = !isDataSetRus
+//        if (isDataSetRus) {
+//            viewModel.getFilmFromLocalSourceWorld()
+//            binding.buttonLang.setImageResource(R.drawable.world2)
+//        } else {
+//            viewModel.getFilmFromLocalSourceRus()
+//            binding.buttonLang.setImageResource(R.drawable.rus2)
+//        }
+//        isDataSetRus = !isDataSetRus
     }
 
     private fun renderData(state: AppState) {
 
         when (state) {
-            is AppState.Loading -> binding.loadingLayout.show()
+            is AppState.Loading -> binding.loadingLayoutMain.show()
 
             is AppState.Success -> {
-                binding.loadingLayout.hide()
+                binding.loadingLayoutMain.hide()
 
                 filmAdapter.setFilmList(state.filmsList)
                 filmAdapter.let {
@@ -103,11 +102,11 @@ class MainFragment : Fragment() {
                 }
             }
             is AppState.Error -> {
-                binding.loadingLayout.hide()
+                binding.loadingLayoutMain.hide()
                 binding.buttonLang.showSnackBar(
                     getString(R.string.textSnack),
                     getString(R.string.actionTextSnack),
-                    { viewModel.getFilmFromLocalSourceRus() },
+                    { viewModel.getPopularFilms() },
                 )
             }
         }
