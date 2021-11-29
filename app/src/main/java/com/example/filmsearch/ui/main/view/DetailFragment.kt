@@ -1,6 +1,7 @@
 package com.example.filmsearch.ui.main.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,6 +81,7 @@ class DetailFragment : Fragment() {
                 Thread{
                     viewModel.saveFilm(film, noteString)
                 }.start()
+                Log.d("fff", Thread.activeCount().toString())
 
                 noteString = ""
                 with(binding) {
@@ -111,5 +113,6 @@ class DetailFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
     }
 }

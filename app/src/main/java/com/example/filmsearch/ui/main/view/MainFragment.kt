@@ -39,9 +39,6 @@ class MainFragment : Fragment() {
             false
         )
 
-//        val toolbar = (activity as AppCompatActivity).supportActionBar
-//        Log.d("fff", "${toolbar?.title}")
-
         _binding = MainFragmentBinding.bind(view)
         return binding.root
     }
@@ -64,11 +61,6 @@ class MainFragment : Fragment() {
                 }
             }
 
-        binding.buttonAdult.setOnClickListener {
-           // isAdult = !isAdult
-            initDataSet()
-        }
-
         button.setOnClickListener {
             viewModel.liveData.observe(viewLifecycleOwner)
             { state ->
@@ -78,12 +70,13 @@ class MainFragment : Fragment() {
             }
             viewModel.getFilmFromRemoteDataSource(isAdult())
         }
+
         button_adult.setOnCheckedChangeListener { buttonView, isChecked ->
-            setDataSetToDisk(isChecked)
+            setDataSetToDisk(isChecked) //записываем тру или фолс
         }
+
         button_adult.isChecked =  isAdult()
 
-        initDataSet()
     }
 
     private fun isAdult(): Boolean {
@@ -95,19 +88,10 @@ class MainFragment : Fragment() {
         return false
     }
 
-    private fun initDataSet() {
-      //  if (button_adult.isChecked) {
-            viewModel.getFilmFromRemoteDataSource(isAdult())
-    //    } else {
-     //       viewModel.getFilmFromRemoteDataSource(!isAdult())
-      //  }
-//        setDataSetToDisk(isAdult)
-
-    }
 
     private fun setDataSetToDisk(isAdult: Boolean) {
         val editor = activity?.getPreferences(Context.MODE_PRIVATE)?.edit() //открываем на чтение
-        editor?.putBoolean(dataSetKey, isAdult)
+        editor?.putBoolean(dataSetKey, isAdult) //сохраняем буленовское значение в преференсы
         editor?.apply() //апплай работает ассинхронно
     }
 

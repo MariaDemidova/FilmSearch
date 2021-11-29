@@ -36,7 +36,7 @@ class MainViewModel(
             }
 
             override fun onResponse(call: Call<FilmModel>, response: Response<FilmModel>) {
-                if (adult) {
+                if (!adult) {
                     response.body()?.let {
                         checkResponse(it.result)
                         liveDataToObserve.postValue(checkResponse(showFilmsWithoutAdult(it.result)))
