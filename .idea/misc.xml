@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Android/FilmSearch/app/src/main/res/layout/detail_fragment.xml" value="0.13958333333333334" />
+        <entry key="..\:/Android/FilmSearch/app/src/main/res/layout/fragment_history.xml" value="0.19293478260869565" />
+        <entry key="..\:/Android/FilmSearch/app/src/main/res/layout/item_film.xml" value="0.13958333333333334" />
+        <entry key="..\:/Android/FilmSearch/app/src/main/res/layout/item_history.xml" value="0.19293478260869565" />
+        <entry key="..\:/Android/FilmSearch/app/src/main/res/layout/main_activity.xml" value="0.19157608695652173" />
+        <entry key="..\:/Android/FilmSearch/app/src/main/res/layout/main_fragment.xml" value="0.19157608695652173" />
+        <entry key="..\:/Android/FilmSearch/app/src/main/res/layout/switch_item.xml" value="0.18802083333333333" />
+        <entry key="..\:/Android/FilmSearch/app/src/main/res/menu/main_menu.xml" value="0.2" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

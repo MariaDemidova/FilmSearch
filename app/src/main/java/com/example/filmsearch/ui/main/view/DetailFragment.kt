@@ -6,26 +6,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import coil.load
 import coil.transform.GrayscaleTransformation
 import com.example.filmsearch.BuildConfig
 import com.example.filmsearch.R
 import com.example.filmsearch.databinding.DetailFragmentBinding
-import com.example.filmsearch.ui.main.model.FilmDTO
+import com.example.filmsearch.ui.main.model.Film
 import com.example.filmsearch.ui.main.viewmodel.AppState
-import com.example.filmsearch.ui.main.viewmodel.DetailsViewModel
+import com.example.filmsearch.ui.main.viewmodel.DetailViewModel
 import kotlinx.android.synthetic.main.detail_fragment.*
-import kotlinx.android.synthetic.main.detail_fragment.main_view_detail
-import kotlinx.android.synthetic.main.main_fragment.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 class DetailFragment : Fragment() {
 
+    companion object {
+        const val FILM_EXTRA = "FILM_EXTRA"
+
+        fun newInstance(bundle: Bundle): DetailFragment {
+            val fragment = DetailFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
+
+    private val viewModel: DetailViewModel by lazy { //создаем вью модель
+        ViewModelProvider(this).get(DetailViewModel::class.java)
+    }
+
     private var _binding: DetailFragmentBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: DetailsViewModel by viewModel()
-
+    var noteString = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,65 +44,75 @@ class DetailFragment : Fragment() {
         val view = inflater.inflate(R.layout.detail_fragment, container, false)
 
         _binding = DetailFragmentBinding.bind(view)
-
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val film = arguments?.getParcelable(FILM_EXTRA) ?: Film() //из бандела получаем фильм,
 
-        arguments?.getParcelable<FilmDTO>(FILM_EXTRA)?.let {
-            with(binding) {
-                detailDescription.text = it.overview
-                detailFilmName.text = it.title
-                // detailGanre.text = film.genres[]
-                detailDate.text = it.releaseDate
-                Log.d("gopa", it.id.toString())
-                viewModel.loadData(it.id!!)
-            }
+        viewModel.liveData.observe(viewLifecycleOwner) { //подписываемся на изменения лайф даты
+            renderData(it)
         }
+        viewModel.getFilmFromRemoteDataSource(film) // во вью модель говорим- сходи в интернет, он идет в инет: говорит во вюь модель репозиторию - сходи в инет
 
-        viewModel.liveDataToObserve.observe(viewLifecycleOwner, { appState ->
+        add_note_button.setOnClickListener {
+            noteString = note.text.toString()
+            Thread{
+                viewModel.saveFilm(film, noteString)
+            }.start()
+                add_note_button.text = "Сохранено"
+        }
+    }
 
-            Log.d("gopa", appState.toString())
+    private fun renderData(state: AppState) {
+        when (state) {
+            is AppState.Loading -> {
+                binding.loadingLayout.show()
+                binding.mainViewDetail.hide()
+            }
 
-            when (appState) {
-                is AppState.Error -> {
-                    main_view_detail.visibility = View.INVISIBLE
-                    loadingLayout.visibility = View.GONE
-                    errorTV.visibility = View.VISIBLE
-                }
-                AppState.Loading -> {
-                    main_view_detail.visibility = View.INVISIBLE
-                    loadingLayout.visibility = View.VISIBLE
-                }
-                is AppState.Success -> {
-                    loadingLayout.visibility = View.GONE
-                    main_view_detail.visibility = View.VISIBLE
-                    detail_FilmName.text = appState.filmsList[0].title
-                    detail_description.text = appState.filmsList[0].overview
-                    //  ganre.text = appState.filmsList[0].ganre
-                    detail_date.text = appState.filmsList[0].releaseDate
-                    imageView.load("https://image.tmdb.org/t/p/w500${appState.filmsList[0].posterPath}?api_key=${BuildConfig.FILM_API_KEY}") {
+            is AppState.Success -> {
+                binding.loadingLayout.hide()
+                binding.mainViewDetail.show()
+
+                val film = state.filmsList.first()
+
+                Thread{
+                    viewModel.saveFilm(film, noteString)
+                }.start()
+                Log.d("fff", Thread.activeCount().toString())
+
+                noteString = ""
+                with(binding) {
+                    detailDate.text = film.date.toString()
+                    detailName.text = film.name
+                    detailGenre.text = film.genre
+                    description.text = film.description
+                    detailImg.load("https://image.tmdb.org/t/p/w500${film.posterPath}?api_key=${BuildConfig.FILM_API_KEY}") {
                         crossfade(true)
                         transformations(GrayscaleTransformation())
                     }
-
                 }
             }
-        })
-    }
 
-    companion object {
-        const val FILM_EXTRA = "FILM_EXTRA"
-        fun newInstance(bundle: Bundle): DetailFragment = DetailFragment().apply {
-            arguments = bundle
+            is AppState.Error -> {
+                binding.loadingLayout.hide()
+                binding.mainViewDetail.showSnackBar(
+                    "ERROR",
+                    "Reload",
+                    {
+                        viewModel.getFilmFromRemoteDataSource(Film())
+                    }
+                )
+
+            }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
     }
 }
