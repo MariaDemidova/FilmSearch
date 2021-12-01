@@ -1,27 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.filmsearch">
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    package="com.example.app_content_provider_client">
 
     <application
-        android:name=".ui.main.view.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FilmSearch">
-        <provider
-            android:name=".ui.main.model.contentprovider.HistoryContentProvider"
-            android:authorities="filmsearch.provider"
-            android:enabled="true"
-            android:exported="true"/>
-
         <activity
-            android:name=".ui.main.view.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

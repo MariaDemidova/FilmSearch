@@ -1,2 +1,3 @@
 rootProject.name = "FilmSearch"
 include ':app'
+include ':app-content-provider-client'

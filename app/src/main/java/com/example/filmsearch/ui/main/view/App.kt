@@ -5,7 +5,7 @@ import androidx.room.Room
 import com.example.filmsearch.ui.main.model.database.HistoryDao
 import com.example.filmsearch.ui.main.model.database.HistoryDataBase
 
-class App: Application() {
+class App : Application() {
 
     override fun onCreate() { //запустится до того, как вызовется активити
         super.onCreate()
@@ -13,15 +13,15 @@ class App: Application() {
     }
 
 
-    companion object{
+    companion object {
         private var appInstance: App? = null
         private var db: HistoryDataBase? = null
 
         private val DB_NAME = "History.db" //имя файла, в который будет сохр база данных
 
-         fun getHistoryDao(): HistoryDao{
+        fun getHistoryDao(): HistoryDao {
 
-            if(db == null){
+            if (db == null) {
                 if (appInstance == null) throw IllegalStateException("Что-то пошло не так")
 
                 db = Room.databaseBuilder( // инициализируем базу данных
@@ -30,7 +30,7 @@ class App: Application() {
                     DB_NAME //передаем имя
 
                 )
-                    .addMigrations(HistoryDataBase.Migration1to2)//так как это тяжеловесно, то обычно происходит в отдельном потоке. мы просим делать это в основном
+                    .addMigrations(HistoryDataBase.Migration1to2)
                     .build()
 
             }
