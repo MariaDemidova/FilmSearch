@@ -1,7 +1,6 @@
 package com.example.filmsearch.ui.main.viewmodel
 
 import android.util.Log
-import android.widget.CheckBox
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +10,6 @@ import com.example.filmsearch.ui.main.model.FilmModel
 import com.example.filmsearch.ui.main.model.RemoteDataSource
 import com.example.filmsearch.ui.main.model.repos.Repository
 import com.example.filmsearch.ui.main.model.repos.RepositoryImpl
-
 import retrofit2.Call
 import retrofit2.Response
 
@@ -31,7 +29,7 @@ class MainViewModel(
         repository.getPopularFilmsByRetro(object : retrofit2.Callback<FilmModel> {
 
             override fun onFailure(call: Call<FilmModel>, t: Throwable) {
-                Log.d("fff", t.toString())
+
                 liveDataToObserve.postValue(AppState.Error(t))
             }
 

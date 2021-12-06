@@ -1,7 +1,6 @@
 package com.example.filmsearch.ui.main.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +28,7 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private val viewModel: DetailViewModel by lazy { //создаем вью модель
+    private val viewModel: DetailViewModel by lazy {
         ViewModelProvider(this).get(DetailViewModel::class.java)
     }
 
@@ -49,19 +48,20 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val film = arguments?.getParcelable(FILM_EXTRA) ?: Film() //из бандела получаем фильм,
 
-        viewModel.liveData.observe(viewLifecycleOwner) { //подписываемся на изменения лайф даты
+        val film = arguments?.getParcelable(FILM_EXTRA) ?: Film()
+
+        viewModel.liveData.observe(viewLifecycleOwner) {
             renderData(it)
         }
-        viewModel.getFilmFromRemoteDataSource(film) // во вью модель говорим- сходи в интернет, он идет в инет: говорит во вюь модель репозиторию - сходи в инет
+        viewModel.getFilmFromRemoteDataSource(film)
 
         add_note_button.setOnClickListener {
             noteString = note.text.toString()
-            Thread{
+            Thread {
                 viewModel.saveFilm(film, noteString)
             }.start()
-                add_note_button.text = "Сохранено"
+            add_note_button.text = "Сохранено"
         }
     }
 
@@ -78,10 +78,9 @@ class DetailFragment : Fragment() {
 
                 val film = state.filmsList.first()
 
-                Thread{
+                Thread {
                     viewModel.saveFilm(film, noteString)
                 }.start()
-                Log.d("fff", Thread.activeCount().toString())
 
                 noteString = ""
                 with(binding) {
@@ -105,7 +104,6 @@ class DetailFragment : Fragment() {
                         viewModel.getFilmFromRemoteDataSource(Film())
                     }
                 )
-
             }
         }
     }
@@ -113,6 +111,5 @@ class DetailFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-
     }
 }
