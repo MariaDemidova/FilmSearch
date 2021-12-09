@@ -25,10 +25,10 @@ import java.util.*
 
 class DetailViewModel() : ViewModel(), LifecycleObserver {
     private val repository: DetailsRepository =
-        DetailsRepositoryImpl(RemoteDataSource()) //чтоб получать данные
+        DetailsRepositoryImpl(RemoteDataSource())
 
     private val localRepository: LocalRepository =
-        LocalRepositoryImpl(App.getHistoryDao()) //тут спрятан контекст
+        LocalRepositoryImpl(App.getHistoryDao())
 
     private val detailLiveData = MutableLiveData<AppState>()
 
@@ -46,15 +46,15 @@ class DetailViewModel() : ViewModel(), LifecycleObserver {
                 override fun onResponse(call: Call, response: Response) {
                     response.body()?.string()?.let { body ->
 
-                        detailLiveData.postValue(checkResponse(body))      //если успешно, то отрисуем успешно/ пост велью в ассинхронном потоке. сет велью в текущем
+                        detailLiveData.postValue(checkResponse(body))
 
                     }
                 }
             })
     }
 
-    private fun checkResponse(response: String): AppState { // преобразуем данные в апстейт
-        // преобразуем данные в апстейт
+    private fun checkResponse(response: String): AppState {
+
         val filmDTO = Gson().fromJson(response, FilmDTO::class.java)
         return if (filmDTO.id != null) {
 

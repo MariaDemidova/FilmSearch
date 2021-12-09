@@ -6,4 +6,18 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Add_note">Добавить заметку</string>
+
+    <string name="default_address">Red Square, 1, Moscow</string>
+    <string name="button_search_map">Search</string>
+    <string name="marker_start">Start</string>
+    <string name="AD_access_to_contacts_title">Доступ к контактам</string>
+    <string name="AD_access_to_contacts_message">Вы запретили доступ к контактам и теперь мы не можем украсть Ваши контакты. Не хотите ли открыть доступ?</string>
+    <string name="AD_access_to_contacts_pos_btn">Открыть настройки</string>
+    <string name="AD_access_to_contacts_neg_btn">МИЛИЦИЯ!</string>
+    <string name="No_access_to_permission">No access to permission</string>
+    <string name="AD_Access_to_geo_title">Доступ к локации</string>
+    <string name="AD_Access_to_geo_mess">Вы запретили доступ к локации. Не хотите ли открыть доступ?</string>
+    <string name="AD_Access_to_geo_mess_map">Невозможно определить гео локацию </string>
+
+
 </resources>
