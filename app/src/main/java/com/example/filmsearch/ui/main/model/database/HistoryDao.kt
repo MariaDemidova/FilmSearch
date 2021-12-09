@@ -1,5 +1,6 @@
 package com.example.filmsearch.ui.main.model.database
 
+import android.database.Cursor
 import androidx.room.*
 import retrofit2.http.DELETE
 
@@ -19,7 +20,14 @@ interface HistoryDao { //дата акцесс обжект =  управляе�
 
     @Delete
     fun delete(entity: HistoryEntity)
-//
-//    @Query("DELETE FROM HistoryEntity")
-//    fun clear(entity: HistoryEntity)
+
+    @Query("SELECT id, title FROM HistoryEntity ORDER by timestamp DESC")
+    fun getHistoryCursor(): Cursor
+
+    @Query("SELECT id, title FROM HistoryEntity WHERE id = :id")
+    fun getHistoryCursor(id: Long): Cursor
+
+    @Query("DELETE FROM HistoryEntity WHERE id = :id")
+    fun deleteById(id: Long)
+
 }

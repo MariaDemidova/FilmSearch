@@ -26,8 +26,10 @@ import java.util.*
 class DetailViewModel() : ViewModel(), LifecycleObserver {
     private val repository: DetailsRepository =
         DetailsRepositoryImpl(RemoteDataSource()) //чтоб получать данные
+
     private val localRepository: LocalRepository =
         LocalRepositoryImpl(App.getHistoryDao()) //тут спрятан контекст
+
     private val detailLiveData = MutableLiveData<AppState>()
 
     val liveData: LiveData<AppState> = detailLiveData

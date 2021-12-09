@@ -7,4 +7,9 @@
         android:icon="@android:drawable/ic_menu_recent_history"
         app:showAsAction="always"/>
 
+    <item android:id="@+id/getContact"
+        android:title="Contacts"
+        android:icon="@drawable/ic_baseline_contact_phone_24"
+        app:showAsAction="always"/>
+
 </menu>
