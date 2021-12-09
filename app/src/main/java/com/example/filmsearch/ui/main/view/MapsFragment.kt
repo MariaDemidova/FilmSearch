@@ -180,7 +180,7 @@ class MapsFragment : Fragment() {
 
     private fun addMarkerToArray(location: LatLng) {
         val marker =
-            setMarker(location, markers.size.toString(), R.drawable.ic_baseline_my_location_24)
+            setMarker(location, markers.size.toString(), R.drawable.ic_map_marker32)
         markers.add(marker)
     }
 
