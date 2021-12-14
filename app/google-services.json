@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "945386752509",
+    "project_id": "filmsearch-85eac",
+    "storage_bucket": "filmsearch-85eac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945386752509:android:fbf19ae1a08392ccff7194",
+        "android_client_info": {
+          "package_name": "com.example.filmsearch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "945386752509-hl0n7ltgc3g3p11asq5c672qhqag9uvp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKC4OcCG85cwLCeCvXY7xyL-9EjbDgPUM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "945386752509-hl0n7ltgc3g3p11asq5c672qhqag9uvp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

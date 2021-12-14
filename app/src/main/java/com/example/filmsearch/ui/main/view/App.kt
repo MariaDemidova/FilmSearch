@@ -1,15 +1,21 @@
 package com.example.filmsearch.ui.main.view
 
 import android.app.Application
+import android.util.Log
 import androidx.room.Room
 import com.example.filmsearch.ui.main.model.database.HistoryDao
 import com.example.filmsearch.ui.main.model.database.HistoryDataBase
+import com.google.firebase.FirebaseApp
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.ktx.messaging
 
 class App : Application() {
 
     override fun onCreate() { //запустится до того, как вызовется активити
         super.onCreate()
         appInstance = this
+
     }
 
 
